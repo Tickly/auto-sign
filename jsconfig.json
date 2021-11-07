@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2015",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": [
+        "renderer/*"
+      ]
+    }
+  },
+  "include": [
+    "renderer/**/*.vue",
+    "renderer/**/*.js",
+  ]
+}

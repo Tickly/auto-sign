@@ -6,6 +6,10 @@ const router = new Router({
 })
 
 router
+  .get('/likes', async ctx => {
+    const user = await BaiduAccount.getUser()
+    ctx.body = await user.getLikes()
+  })
   .get('/sign', async ctx => {
     const user = await BaiduAccount.getUser()
     ctx.body = await user.signAll()

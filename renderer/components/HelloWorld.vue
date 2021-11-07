@@ -8,24 +8,24 @@
         >vue-cli documentation</a
       >.
     </p>
-    <button @click="handleClick">签到</button>
+    <a-button @click="handleClick">签到</a-button>
   </div>
 </template>
 
 <script>
-import http from "../http";
+import http from '../http'
 
 export default {
-  name: "HelloWorld",
+  name: 'HelloWorld',
   props: {
     msg: String,
   },
   methods: {
     handleClick() {
-      http.get("/baidu/sign");
+      http.get('/baidu/likes')
     },
   },
-};
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
