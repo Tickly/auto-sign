@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <a-table rowkey="forum_id" :pagination="false" :dataSource="likes" :columns="columns" />
+    <a-table row-key="forum_id" :pagination="false" :dataSource="likes" :columns="columns" />
   </div>
 </template>
 <script>
@@ -13,6 +13,8 @@ export default {
 
     http.get('/baidu/likes').then((list) => (likes.value = list))
 
+    http.get('/baidu/test')
+
     return {
       likes,
       columns: [
@@ -24,7 +26,18 @@ export default {
           title: '等级',
           dataIndex: 'level_id',
         },
-
+        {
+          title: '状态',
+          customRender: ({ record }) => {
+            const { signResult: { error_msg } } = record
+            return error_msg
+          }
+        },
+        {
+          customRender: () => <div>
+            <a-button>签到</a-button>
+          </div>
+        }
       ],
     }
   },

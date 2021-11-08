@@ -39,15 +39,17 @@ export default class BaiduAccount {
   /**
    * 签到单个贴吧
    */
-  async sign(fid, kw) {
+  async sign(forum) {
+    const { forum_id, forum_name } = forum
+
     const tbs = await this.getTbs()
     const sp = new URLSearchParams()
 
     const [k, v] = this.cookie.split('=')
     sp.set(k, v)
 
-    sp.set('fid', fid)
-    sp.set('kw', kw)
+    sp.set('fid', forum_id)
+    sp.set('kw', forum_name)
     sp.set('tbs', tbs)
 
     const sign = getSign(sp)
@@ -56,12 +58,8 @@ export default class BaiduAccount {
     const url = '/c/c/forum/sign'
     return this.http.post(url, {}, { params: sp })
       .then(res => {
-
         const response = {
-          signTarget: {
-            id: fid,
-            name: kw,
-          },
+          ...forum,
           signResult: res,
         }
 
@@ -74,7 +72,7 @@ export default class BaiduAccount {
    */
   async signAll() {
     const list = await this.getLikes()
-    const queue = list.map(({ forum_name, forum_id }) => this.sign(forum_id, forum_name))
+    const queue = list.map(i => this.sign(i))
     return Promise.all(queue)
   }
 
@@ -94,7 +92,7 @@ export default class BaiduAccount {
     })
   }
 
-  static async getUser() { 
+  static async getUser() {
     const config = await db.read()
     const user = new BaiduAccount()
     user.loadConfig(config)

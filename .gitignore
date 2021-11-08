@@ -27,3 +27,4 @@ pnpm-debug.log*
 
 #存储cookie文件
 config/db.json
+config/db.js
