@@ -11,31 +11,58 @@ export default {
   setup() {
     const likes = ref([])
 
-    http.get('/baidu/likes').then((list) => (likes.value = list))
+    const fetch = () => {
+      http.get('/baidu/likes').then((list) => (likes.value = list))
+    }
 
-    http.get('/baidu/test')
+    const sign = ({ forum_id, forum_name }) => {
+      http.get('/baidu/sign', { params: { forum_id, forum_name } })
+        .then(() => {
+          fetch()
+        })
+    }
+
+    fetch()
+
+
 
     return {
       likes,
       columns: [
         {
+          title: 'id',
+          dataIndex: 'forum_id',
+        },
+        {
           title: '贴吧',
           dataIndex: 'forum_name',
+          customRender: ({ record }) => {
+            return <div>
+              <img src={record.avatar} />
+              <span>{record.forum_name}</span>
+            </div>
+          }
         },
         {
           title: '等级',
           dataIndex: 'level_id',
         },
         {
-          title: '状态',
+          title: '签到状态',
           customRender: ({ record }) => {
-            const { signResult: { error_msg } } = record
-            return error_msg
+            const { signed } = record
+            return signed ? '已签到' : null
           }
         },
         {
-          customRender: () => <div>
-            <a-button>签到</a-button>
+          title: '签到时间',
+          dataIndex: 'sign_date',
+        },
+        {
+          customRender: ({ record }) => <div>
+            {
+              record.signed ? null : <a-button onClick={() => sign(record)}>签到</a-button>
+            }
           </div>
         }
       ],
@@ -43,3 +70,10 @@ export default {
   },
 }
 </script>
+<style>
+.about img {
+  width: 2em;
+  height: 2em;
+  margin-right: 1em;
+}
+</style>

@@ -10,4 +10,15 @@ const connection = mysql.createConnection({
 })
 
 
+export const query = (sql, params) => {
+  return new Promise((resolve, reject) => {
+    connection.query(sql, params, function (error, results) {
+      if (error) reject(error)
+      console.log(results)
+      resolve(results)
+    })
+  })
+}
+
+
 export default connection

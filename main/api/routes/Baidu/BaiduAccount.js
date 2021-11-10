@@ -1,6 +1,8 @@
 import axios from 'axios'
 import md5 from 'md5'
 import db from '@/db.js'
+import moment from 'moment'
+import { query } from '../../connection'
 
 const createHttp = (cookie) => {
   const http = axios.create({
@@ -57,14 +59,6 @@ export default class BaiduAccount {
 
     const url = '/c/c/forum/sign'
     return this.http.post(url, {}, { params: sp })
-      .then(res => {
-        const response = {
-          ...forum,
-          signResult: res,
-        }
-
-        return response
-      })
   }
 
   /**
@@ -72,12 +66,13 @@ export default class BaiduAccount {
    */
   async signAll() {
     const list = await this.getLikes()
-    const queue = list.map(i => this.sign(i))
+    const queue = list.map(i => this.sign(i).then(signResult => ({ ...i, signResult })))
     return Promise.all(queue)
   }
 
   /**
    * 获取关注贴吧列表
+   * @returns {Array}
    */
   getLikes() {
     const url = '/mg/o/getForumHome'
@@ -90,6 +85,18 @@ export default class BaiduAccount {
     return this.http.get(url).then(res => {
       return res.tbs
     })
+  }
+
+  /**
+   * 判断今天是否签到
+   */
+  isSignToday(forum_id) {
+    const sql = `SELECT * FROM autosign.sign
+        where date(create_at) = ?
+        and forum_id = ?;`
+    const params = [moment().format('YYYY-MM-DD'), forum_id]
+
+    return query(sql, params)
   }
 
   static async getUser() {
