@@ -1,7 +1,8 @@
 <template>
   <div id="nav">
     <router-link to="/">Home</router-link> |
-    <router-link to="/baidu-tieba">百度贴吧</router-link>
+    <router-link to="/baidu-tieba">百度贴吧</router-link> |
+    <router-link to="/v2ex">V2EX</router-link>
   </div>
   <router-view/>
 </template>

@@ -1,9 +1,12 @@
 import Router from '@koa/router'
 import user from './user'
 import baidu from './baidu'
+import v2ex from './v2ex'
 
 const routes = [
-  user, baidu,
+  user,
+  baidu,
+  v2ex,
 ]
 
 export const createRouter = app => {

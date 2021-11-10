@@ -1,19 +1,9 @@
-import axios from 'axios'
 import md5 from 'md5'
 import db from '@/db.js'
 import moment from 'moment'
 import { query } from '../../connection'
+import { createHttp } from '../../http'
 
-const createHttp = (cookie) => {
-  const http = axios.create({
-    baseURL: 'http://tieba.baidu.com',
-    headers: {
-      cookie,
-    }
-  })
-  http.interceptors.response.use(res => res.data)
-  return http
-}
 
 /**
  * @param {URLSearchParams} params 
@@ -34,7 +24,7 @@ export default class BaiduAccount {
     const cookie = config.baidu
 
     this.cookie = cookie
-    this.http = createHttp(cookie)
+    this.http = createHttp(cookie, { baseURL: 'http://tieba.baidu.com' })
   }
 
 
