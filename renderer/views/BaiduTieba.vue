@@ -1,6 +1,11 @@
 <template>
   <div class="about">
-    <a-table row-key="forum_id" :pagination="false" :dataSource="likes" :columns="columns" />
+    <a-table
+      row-key="forum_id"
+      :pagination="false"
+      :dataSource="likes"
+      :columns="columns"
+    />
   </div>
 </template>
 <script>
@@ -16,15 +21,12 @@ export default {
     }
 
     const sign = ({ forum_id, forum_name }) => {
-      http.get('/baidu/sign', { params: { forum_id, forum_name } })
-        .then(() => {
-          fetch()
-        })
+      http.get('/baidu/sign', { params: { forum_id, forum_name } }).then(() => {
+        fetch()
+      })
     }
 
     fetch()
-
-
 
     return {
       likes,
@@ -37,11 +39,13 @@ export default {
           title: '贴吧',
           dataIndex: 'forum_name',
           customRender: ({ record }) => {
-            return <div>
-              <img src={record.avatar} />
-              <span>{record.forum_name}</span>
-            </div>
-          }
+            return (
+              <div>
+                <img src={record.avatar} />
+                <span>{record.forum_name}</span>
+              </div>
+            )
+          },
         },
         {
           title: '等级',
@@ -52,19 +56,21 @@ export default {
           customRender: ({ record }) => {
             const { signed } = record
             return signed ? '已签到' : null
-          }
+          },
         },
         {
           title: '签到时间',
           dataIndex: 'sign_date',
         },
         {
-          customRender: ({ record }) => <div>
-            {
-              record.signed ? null : <a-button onClick={() => sign(record)}>签到</a-button>
-            }
-          </div>
-        }
+          customRender: ({ record }) => (
+            <div>
+              {record.signed ? null : (
+                <a-button onClick={() => sign(record)}>签到</a-button>
+              )}
+            </div>
+          ),
+        },
       ],
     }
   },

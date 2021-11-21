@@ -1,24 +1,22 @@
-# electron-template
+# auto-sign
 
-## Project setup
-```
-yarn install
-```
+# 定义几个概念
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+## App 应用
 
-### Compiles and minifies for production
-```
-yarn build
-```
+比如 百度贴吧 v2ex，这些就是app
 
-### Lints and fixes files
-```
-yarn lint
-```
+每个应用要实现以下方法
+- 读取Cookie
+- 获取任务（生成任务）
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Task 任务
+
+App下面会有签到任务，比如百度贴吧里，需要签到每个关注的贴吧，N个贴吧N个任务。
+v2ex目前有首页的领取登录奖励，这算一个任务。
+
+每个任务要实现以下几种方法
+
+- 数据库查询今日是否签到
+- 数据库写入今日签到结果
+- 模拟请求实现签到

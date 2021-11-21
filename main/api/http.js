@@ -1,18 +1,21 @@
 import axios from 'axios'
+// import SocksProxyAgent from 'socks-proxy-agent'
 
-export const createHttp = (cookie, { baseURL, httpsAgent }) => {
+const host = '127.0.0.1'
+const port = 7890
+
+export const createHttp = (cookie, { baseURL }) => {
   const http = axios.create({
     baseURL,
-    httpsAgent,
+    // httpsAgent: new SocksProxyAgent(`socks5://${host}:${port}`),
     headers: {
       cookie,
-      Accept: '*/*',
-      Connection: 'keep-alive',
+      'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36',
     },
     proxy: {
       protocol: 'http',
-      host: '127.0.0.1',
-      port: 7890,
+      host,
+      port,
     }
   })
 
@@ -30,6 +33,7 @@ export const createHttp = (cookie, { baseURL, httpsAgent }) => {
   }
   const onRejected = error => {
     console.log(error)
+    throw error
   }
 
   http.interceptors.response.use(onFulfilled, onRejected)

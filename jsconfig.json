@@ -11,5 +11,9 @@
   "include": [
     "renderer/**/*.vue",
     "renderer/**/*.js",
+  ],
+  "exclude": [
+    "node_modules",
+    "dist_electron",
   ]
 }

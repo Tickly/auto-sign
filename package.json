@@ -18,11 +18,13 @@
     "@koa/router": "^10.1.1",
     "ant-design-vue": "^2.2.8",
     "axios": "^0.24.0",
+    "cheerio": "^1.0.0-rc.10",
     "core-js": "^3.6.5",
     "koa": "^2.13.4",
     "md5": "^2.3.0",
     "moment": "^2.29.1",
     "mysql": "^2.18.1",
+    "socks-proxy-agent": "^6.1.0",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
