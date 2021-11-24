@@ -25,16 +25,26 @@ const sign = (cookie) => {
         return '已领取'
       }
 
-      
+
       const btn = box.find('input.button')
       // 如果有领取按钮
       if (btn.length) {
         const [, once] = btn.attr('onclick').match(/=(\d+)/)
         const url = '/mission/daily/redeem?once=' + once
-        http.get(url)
-      }
-      //   return 123
+        console.log(url)
+        return http.get(url, {
+          headers: {
+            referer: baseURL + '/mission/daily'
+          }
+        }).then(html => {
+          console.log(2)
+          console.log(html)
+          return 66
+        })
 
+      }
+
+      return 123
     })
 }
 

@@ -1,22 +1,25 @@
 import axios from 'axios'
-// import SocksProxyAgent from 'socks-proxy-agent'
+import tunnel from 'tunnel'
 
 const host = '127.0.0.1'
 const port = 7890
 
+const httpsAgent = tunnel.httpsOverHttp({
+  proxy: {
+    host, port,
+  }
+})
+
+
 export const createHttp = (cookie, { baseURL }) => {
   const http = axios.create({
     baseURL,
-    // httpsAgent: new SocksProxyAgent(`socks5://${host}:${port}`),
     headers: {
       cookie,
       'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36',
     },
-    proxy: {
-      protocol: 'http',
-      host,
-      port,
-    }
+    httpsAgent,
+    proxy: false,
   })
 
   http.interceptors.request.use(config => {
