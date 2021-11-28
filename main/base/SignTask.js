@@ -2,6 +2,7 @@ export default class SignTask {
   constructor({ id, name }) {
     this.id = id
     this.name = name
+    this.signed = false
   }
 
   /**

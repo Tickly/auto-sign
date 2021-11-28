@@ -13,8 +13,8 @@ const router = new Router({
 
 const Log = ({ forum_id }) => {
   const date = moment().format('YYYY-MM-DD HH:mm:ss')
-  const sql = 'INSERT INTO `autosign`.`sign` (`create_at`, `forum_id`) VALUES (?, ?);'
-  const params = [date, forum_id]
+  const sql = 'INSERT INTO `autosign`.`sign` (`create_at`, `forum_id`,`app_id`) VALUES (?, ?, ?);'
+  const params = [date, forum_id, 1]
   return query(sql, params)
 }
 

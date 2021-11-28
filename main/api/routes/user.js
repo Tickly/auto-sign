@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import App from '@/base/App'
 import SignLog from '@/base/SignLog'
+import SignTask from '@/base/SignTask'
 import Router from '@koa/router'
 import Signer from '../Signer'
 
@@ -32,7 +33,15 @@ user.get('/tasks', async ctx => {
 
   const logs = await SignLog.getLogs(app.id, tasks.map(task => task.id).join(','))
 
-  ctx.body = { tasks, logs }
+  const t2 = tasks.map(t => {
+    const task = new SignTask(t)
+
+    task.signed = logs.some(log => log.forum_id === task.id)
+
+    return task
+  })
+
+  ctx.body = { tasks, logs, t2 }
 })
 
 export default user
