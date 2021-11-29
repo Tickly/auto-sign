@@ -70,12 +70,6 @@ export default class BaiduAccount {
   }
 
 
-  getTbs() {
-    const url = '/dc/common/tbs'
-    return this.http.get(url).then(res => {
-      return res.tbs
-    })
-  }
 
   /**
    * 判断今天是否签到

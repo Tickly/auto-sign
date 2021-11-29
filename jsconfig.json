@@ -11,6 +11,7 @@
   "include": [
     "renderer/**/*.vue",
     "renderer/**/*.js",
+    "renderer/**/*.jsx",
   ],
   "exclude": [
     "node_modules",

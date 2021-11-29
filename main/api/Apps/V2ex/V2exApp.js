@@ -1,13 +1,15 @@
 import App from '@/base/App'
-import SignTask from '@/base/SignTask'
+import DailyTask from './DailyTask'
 
 export default class V2exApp extends App {
-  getSignTasks() {
+  async getSignTasks() {
     return [
-      new SignTask({
+      new DailyTask({
         id: 1,
         name: '登录奖励'
       })
     ]
   }
+
+  
 }

@@ -1,8 +1,22 @@
+
 export default class SignTask {
   constructor({ id, name }) {
     this.id = id
     this.name = name
     this.signed = false
+
+    this.http = this.createHttp()
+  }
+
+  /**
+   * @returns {import("axios").AxiosInstance}
+   */
+  createHttp() {
+    
+  }
+
+  setCookie(cookie) {
+    this.http.defaults.headers.cookie = cookie
   }
 
   /**

@@ -43,7 +43,7 @@ class Signer {
     return query(sql)
   }
 
-  getApp(id) { 
+  getApp(id) {
     return this.appMap.get(+id)
   }
 
@@ -53,8 +53,13 @@ class Signer {
    */
   getAppClass(app_id) {
     const app = this.appMap.get(+app_id)
+    const appClass = this.appClassMap.get(app.name)
 
-    return this.appClassMap.get(app.name)
+    if (!appClass) {
+      throw new Error('没有找到该应用！')
+    }
+
+    return new appClass(app_id)
   }
 
 }

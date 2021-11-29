@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-import App from '@/base/App'
 import SignLog from '@/base/SignLog'
 import SignTask from '@/base/SignTask'
 import Router from '@koa/router'
@@ -16,16 +15,7 @@ user.get('/apps', async ctx => {
 
 user.get('/tasks', async ctx => {
   const { app_id } = ctx.request.query
-  const appClass = Signer.getAppClass(app_id)
-
-  if (!appClass) {
-    throw new Error('没有找到该应用！')
-  }
-
-  /**
-   * @type {App}
-   */
-  const app = new appClass(app_id)
+  const app = Signer.getAppClass(app_id)
 
   await app.getCookie()
 
@@ -42,6 +32,18 @@ user.get('/tasks', async ctx => {
   })
 
   ctx.body = { tasks, logs, t2 }
+})
+
+user.get('/sign', async ctx => {
+  const { app_id, task_id } = ctx.request.query
+
+  const app = Signer.getAppClass(app_id)
+
+  await app.getCookie()
+
+  const result = await app.sign(+task_id)
+
+  ctx.body = result
 })
 
 export default user

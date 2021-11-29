@@ -40,4 +40,18 @@ export default class App {
     console.log('get-cookie', this.cookie)
     return row
   }
+
+  /**
+   * 签到
+   * @param {Number} task_id 任务id
+   */
+  async sign(task_id) {
+    const tasks = await this.getSignTasks()
+    const task = tasks.find(t => t.id === task_id)
+    if (task) {
+      task.setCookie(this.cookie)
+      return await task.sign(task_id)
+    }
+    return task
+  }
 }
